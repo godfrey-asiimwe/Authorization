@@ -24,13 +24,14 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .views import MeView
+from .views import MeView, Users
 from .viewsets import ContactViewSet
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('me/', MeView.as_view(), name='me'),
+    path('users/', Users.as_view(), name='users'),
 ]
 
 router = DefaultRouter()

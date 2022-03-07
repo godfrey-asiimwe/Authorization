@@ -11,11 +11,10 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        exclude = ('password',)
+        fields = ('id','username', 'first_name','last_name')
 
 
 class ContactSerializer(serializers.ModelSerializer):
-
     # Create new contact associated with current authenticated user
     def create(self, validated_data):
         user = self.context['request'].user
