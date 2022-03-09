@@ -17,3 +17,8 @@ class Contact(models.Model):
 
     def __str__(self):
         return "%s - %s" % (self.name, self.phone,)
+
+
+class ProjectUsers(models.Model):
+    userId = models.CharField(max_length=100)
+    projectId = models.CharField(max_length=100)

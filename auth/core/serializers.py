@@ -3,7 +3,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from . import models
 from django.contrib.auth import get_user_model
-from .models import Contact
+from .models import Contact, ProjectUsers
 
 User = get_user_model()
 
@@ -11,7 +11,13 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','username', 'first_name','last_name')
+        fields = ('id', 'username', 'first_name', 'last_name')
+
+
+class ProjectUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjectUsers
+        fields = ('id', 'userId', 'projectId')
 
 
 class ContactSerializer(serializers.ModelSerializer):
