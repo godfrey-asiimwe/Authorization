@@ -40,3 +40,17 @@ def add_projects(request):
         return Response(project.data)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class ProjectUser(APIView):
+    def get(self, request):
+        users = ProjectUsers.objects.all()
+        serializer = ProjectUserSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def getUserByProjectId(request,pk):
+    users = ProjectUsers.objects.all().filter(projectId=pk)
+    serializer = ProjectUserSerializer(users, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
