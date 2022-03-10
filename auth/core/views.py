@@ -50,7 +50,12 @@ class ProjectUser(APIView):
 
 
 @api_view(['GET'])
-def getUserByProjectId(request,pk):
+def getUserByProjectId(request, pk):
     users = ProjectUsers.objects.all().filter(projectId=pk)
-    serializer = ProjectUserSerializer(users, many=True)
+
+    userinfo = []
+    for user in users:
+        userinfo += User.objects.all().filter(id=user.userId)
+
+    serializer = UserSerializer(userinfo, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
