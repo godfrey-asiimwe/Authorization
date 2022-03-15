@@ -24,7 +24,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .views import MeView, Users, ProjectUser
+from .views import MeView, Users, ProjectUser, ChangePasswordView
 from .viewsets import ContactViewSet
 
 urlpatterns = [
@@ -35,6 +35,8 @@ urlpatterns = [
     path('create/', views.add_projects, name='add-projects'),
     path('projectusers/', ProjectUser.as_view(), name='projectusers'),
     path('prousers/<int:pk>', views.getUserByProjectId),
+    path('change_password/<int:pk>/', ChangePasswordView.as_view(), name='auth_change_password'),
+
 ]
 
 router = DefaultRouter()
