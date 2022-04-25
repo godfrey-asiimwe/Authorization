@@ -35,6 +35,9 @@ urlpatterns = [
     path('create/', views.add_projects, name='add-projects'),
     path('projectusers/', ProjectUser.as_view(), name='projectusers'),
     path('prousers/<int:pk>', views.getUserByProjectId),
+    path('contacts/',views.Contacts.as_view()),
+    path('contact/<int:pk>', views.getContactByUser),
+    path('update/<int:pk>', views.update_contacts),
     path('change_password/<int:pk>/', ChangePasswordView.as_view(), name='auth_change_password'),
 
 ]

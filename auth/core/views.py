@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import serializers
 
-from .models import ProjectUsers
-from .serializers import UserSerializer, ProjectUserSerializer, ChangePasswordSerializer
+from .models import ProjectUsers, Contact
+from .serializers import UserSerializer, ProjectUserSerializer, ChangePasswordSerializer, ContactSerializer
 
 
 class MeView(APIView):
@@ -49,6 +49,13 @@ class ProjectUser(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class Contacts(APIView):
+    def get(self, request):
+        contacts = Contact.objects.all()
+        serializer = ContactSerializer(contacts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 @api_view(['GET'])
 def getUserByProjectId(request, pk):
     users = ProjectUsers.objects.all().filter(projectId=pk)
@@ -61,8 +68,27 @@ def getUserByProjectId(request, pk):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ChangePasswordView(generics.UpdateAPIView):
+@api_view(['GET'])
+def getContactByUser(request, pk):
+    contacts = Contact.objects.all().filter(user=pk)
 
+    serializer = ContactSerializer(contacts, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer
+
+
+@api_view(['POST'])
+def update_contacts(request, pk):
+    contact = Contact.objects.get(pk=pk)
+    data = ContactSerializer(instance=contact, data=request.data)
+
+    if data.is_valid():
+        data.save()
+        return Response(data.data)
+    else:
+        return Response(status=status.HTTP_404_NOT_FOUND)

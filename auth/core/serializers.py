@@ -31,7 +31,7 @@ class ContactSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contact
-        exclude = ('user',)
+        fields = ('id','user', 'name','email','phone','notes')
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
