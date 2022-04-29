@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ProjectUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectUsers
-        fields = ('id', 'userId', 'projectId')
+        fields = ('id', 'userId', 'projectId','role')
 
 
 class ContactSerializer(serializers.ModelSerializer):
